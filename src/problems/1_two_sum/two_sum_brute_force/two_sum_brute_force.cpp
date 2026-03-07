@@ -2,6 +2,7 @@
 #include <iostream>
 
 using namespace std;
+
 /*  -- Brute force solution
     -- Time complexity: O(n^2)
 
@@ -11,7 +12,7 @@ using namespace std;
 
         Memory: 14.16 MB
         Beats: 66.27%
- */
+*/
 
 vector<int> twoSum(vector<int>& nums, int target) {
     auto result = vector<int>();
