@@ -1,9 +1,9 @@
 # Queues
 
-- Data strcuture that follows the **FIFO** (first-in, first-out) paradigm
+- Data structure that follows the **FIFO** (first-in, first-out) paradigm
 - It is implemented using a linked list as its foundation
 - It should have a reference to the first and the last item in the linked list
-- This will ease insertion next to the last item, and poping the first item of the list
+- This will ease insertion next to the last item, and popping the first item of the list
 - Inside each element, only a reference to the next node is needed
 - Considering the following queue:
 

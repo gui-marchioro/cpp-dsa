@@ -1,6 +1,6 @@
 # Stack
 
-- Data strcuture that follows the **LIFO** (last-in, first-out) paradigm
+- Data structure that follows the **LIFO** (last-in, first-out) paradigm
 - If the size is known upfront it could be implemented using an array
 - But generally it is implemented using a linked list
 - It should have a reference to the last item in the linked list
@@ -10,5 +10,5 @@
 
     | #0 | <- | #1 | <- | #2 |
 
-    - **#0** was the **first** element added, so it should be the **last** to leave the queue
-    - **#2** was the **last** element added, so it should be the **first** to leave the queue
+    - **#0** was the **first** element added, so it should be the **last** to leave the stack
+    - **#2** was the **last** element added, so it should be the **first** to leave the stack

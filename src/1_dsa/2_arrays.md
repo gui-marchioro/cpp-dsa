@@ -35,6 +35,6 @@ arr = [1, 2, "ABC", [1, 2]]
 arr.append(1)
 ~~~
 
-In memory this kind of array the values are not allocated in a contiguous space. Instead, what is kept are pointers to the next space in memory where the next value is. 
+In memory the values are not allocated in a contiguous space in this kind of arrays. Instead, what is kept are pointers to the next space in memory where the next value is. 
 
 It is possible to say that in those languages an array is closer to a linked list than to the classical definition of an array.
