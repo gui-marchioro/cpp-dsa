@@ -4,5 +4,6 @@
 - Two Pointer
 - Binary search
 - Exponential search
+- Frequency map
 
 *First 2 are the most common*
