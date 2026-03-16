@@ -20,8 +20,8 @@ using namespace std;
         Runtime: 0 ms
         Beats: 100.0%
 
-        Memory: 14.40 MB
-        Beats: 44.55%
+        Memory: 14.07 MB
+        Beats: 69.48%
 */
 
 class Solution {
@@ -40,8 +40,7 @@ public:
         for (int i = 0; i < nums2.size(); i++)
         {
             int number = nums2[i];
-            auto itSet = numSet.find(number);
-            if (itSet != numSet.end())
+            if (numSet.count(number))
             {
                 result.push_back(number);
                 // remove the item so that it won't be added again
