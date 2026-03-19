@@ -18,8 +18,8 @@ using namespace std;
         Runtime: 0 ms
         Beats: 100.00%
 
-        Memory: 10.07 MB
-        Beats: 25.84%
+        Memory: 9.96 MB
+        Beats: 63.52%
 */
 
 // Definition for singly-linked list.
@@ -34,23 +34,13 @@ struct ListNode {
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
-        if (head == nullptr || head->next == nullptr)
-        {
-            return head;
-        }
-
         auto slow = head;
         auto fast = head;
 
-        while (fast->next)
+        while (fast && fast->next)
         {
             slow = slow->next;
-            fast = fast->next;
-            // to prevent crash on even linked lists
-            if (fast->next != nullptr)
-            {
-                fast = fast->next;
-            }
+            fast = fast->next->next;
         }
 
         return slow;
@@ -75,7 +65,7 @@ int main()
     head->next->next = new ListNode(3);
     head->next->next->next = new ListNode(4);
     head->next->next->next->next = new ListNode(5);
-    head->next->next->next->next->next = new ListNode(6);
+    //head->next->next->next->next->next = new ListNode(6);
 
     cout << "list:" << endl;
     printList(head);
