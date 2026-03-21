@@ -3,9 +3,9 @@
 class ListNode {
 public:
     ListNode();
-    ListNode(int val);
-    ListNode(int val, ListNode* next);
-    ~ListNode();
+    ListNode(int value);
+    ListNode(int value, ListNode* nextNode);
+    ~ListNode() = default;
 
     int val;
     ListNode* next;
