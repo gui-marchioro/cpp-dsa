@@ -13,23 +13,43 @@ LinkedList::LinkedList(int headValue) : m_head(nullptr), m_tail(nullptr) {
 LinkedList::LinkedList(const std::vector<int>& values)
     : m_head(nullptr), m_tail(nullptr) {
     for (int value : values) {
-        ListNode* node = new ListNode(value);
-        if (!m_head) {
-            m_head = node;
-            m_tail = node;
-        } else {
-            m_tail->next = node;
-            m_tail = node;
-        }
+        Append(value);
     }
 }
 
+LinkedList::LinkedList(const LinkedList& other) : m_head(nullptr), m_tail(nullptr) {
+    CopyFrom(other);
+}
+
 LinkedList::~LinkedList() {
+    Clear();
+}
+
+LinkedList& LinkedList::operator=(const LinkedList& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    Clear();
+    CopyFrom(other);
+    return *this;
+}
+
+void LinkedList::Clear() {
     ListNode* current = m_head;
     while (current) {
         ListNode* next = current->next;
         delete current;
         current = next;
+    }
+
+    m_head = nullptr;
+    m_tail = nullptr;
+}
+
+void LinkedList::CopyFrom(const LinkedList& other) {
+    for (ListNode* current = other.m_head; current; current = current->next) {
+        Append(current->val);
     }
 }
 
