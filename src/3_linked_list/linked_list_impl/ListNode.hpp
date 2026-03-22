@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
+
 class ListNode {
 public:
-    ListNode();
-    ListNode(int value);
-    ListNode(int value, ListNode* nextNode);
+    explicit ListNode(int value);
+    ListNode(int value, std::unique_ptr<ListNode> nextNode);
     ~ListNode() = default;
 
     int val;
-    ListNode* next;
+    std::unique_ptr<ListNode> next;
 };

@@ -1,28 +1,21 @@
 #include "LinkedList.hpp"
 
-LinkedList::LinkedList(): m_head(nullptr), m_tail(nullptr) {
+LinkedList::LinkedList() {
 
 }
 
-LinkedList::LinkedList(int headValue) : m_head(nullptr), m_tail(nullptr) {
-    ListNode* node = new ListNode(headValue);
-    m_head = node;
-    m_tail = node;
+LinkedList::LinkedList(int headValue) {
+    Append(headValue);
 }
 
-LinkedList::LinkedList(const std::vector<int>& values)
-    : m_head(nullptr), m_tail(nullptr) {
+LinkedList::LinkedList(const std::vector<int>& values) {
     for (int value : values) {
         Append(value);
     }
 }
 
-LinkedList::LinkedList(const LinkedList& other) : m_head(nullptr), m_tail(nullptr) {
+LinkedList::LinkedList(const LinkedList& other) {
     CopyFrom(other);
-}
-
-LinkedList::~LinkedList() {
-    Clear();
 }
 
 LinkedList& LinkedList::operator=(const LinkedList& other) {
@@ -30,35 +23,33 @@ LinkedList& LinkedList::operator=(const LinkedList& other) {
         return *this;
     }
 
-    Clear();
-    CopyFrom(other);
+    LinkedList copy(other);
+    Swap(copy);
     return *this;
 }
 
 void LinkedList::Clear() {
-    ListNode* current = m_head;
-    while (current) {
-        ListNode* next = current->next;
-        delete current;
-        current = next;
-    }
-
-    m_head = nullptr;
+    m_head.reset();
     m_tail = nullptr;
 }
 
 void LinkedList::CopyFrom(const LinkedList& other) {
-    for (ListNode* current = other.m_head; current; current = current->next) {
+    for (ListNode* current = other.m_head.get(); current; current = current->next.get()) {
         Append(current->val);
     }
 }
 
+void LinkedList::Swap(LinkedList& other) noexcept {
+    std::swap(m_head, other.m_head);
+    std::swap(m_tail, other.m_tail);
+}
+
 std::string LinkedList::ToString() const {
     std::string result;
-    auto auxHead = m_head;
+    auto* auxHead = m_head.get();
     while (auxHead) {
         result += std::to_string(auxHead->val);
-        auxHead = auxHead->next;
+        auxHead = auxHead->next.get();
         if (auxHead) {
             result += " -> ";
         }
@@ -67,14 +58,16 @@ std::string LinkedList::ToString() const {
 }
 
 void LinkedList::Append(int value) {
-    ListNode* node = new ListNode(value);
+    auto node = std::make_unique<ListNode>(value);
+    ListNode* nodePtr = node.get();
     if (!m_head) {
-        m_head = node;
-        m_tail = node;
+        m_head = std::move(node);
+        m_tail = nodePtr;
         return;
     }
-    m_tail->next = node;
-    m_tail = node;
+
+    m_tail->next = std::move(node);
+    m_tail = nodePtr;
 }
 
 std::optional<int> LinkedList::Pop() {
@@ -82,24 +75,20 @@ std::optional<int> LinkedList::Pop() {
         return std::nullopt;
     }
 
-    if (m_head == m_tail) {
-        ListNode* node = m_head;
-        int value = node->val;
-        m_head = nullptr;
+    if (m_head.get() == m_tail) {
+        int value = m_head->val;
+        m_head.reset();
         m_tail = nullptr;
-        delete node;
         return value;
     }
 
-    ListNode* newTail = m_head;
-    while (newTail->next != m_tail) {
-        newTail = newTail->next;
+    ListNode* newTail = m_head.get();
+    while (newTail->next.get() != m_tail) {
+        newTail = newTail->next.get();
     }
 
-    ListNode* popNode = m_tail;
-    int value = popNode->val;
+    int value = m_tail->val;
+    newTail->next.reset();
     m_tail = newTail;
-    m_tail->next = nullptr;
-    delete popNode;
     return value;
 }
