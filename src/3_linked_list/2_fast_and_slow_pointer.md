@@ -1,6 +1,6 @@
 # Fast and Slow Pointer Technique
 
-The fast and slow pointer technique (also called the two-pointer technique) is a very common pattern in algorithms—especially for linked lists and arrays. It involves moving two pointers through a data structure at different speeds to solve problems efficiently (usually in O(n) time and O(1) space).
+The fast and slow pointer technique is a very common pattern in algorithms—especially for linked lists and arrays. It involves moving two pointers through a data structure at different speeds to solve problems efficiently (usually in O(n) time and O(1) space).
 
 ## Core Concept
 

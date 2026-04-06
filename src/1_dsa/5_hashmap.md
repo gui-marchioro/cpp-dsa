@@ -35,7 +35,7 @@
 ## Load Factor
 
 - The load factor measures how full a hash table is
-The load factor directly affects performance.
+- The load factor directly affects performance.
 - Low load factor (e.g., 0.5)
     - Fewer collisions
     - Faster lookups
