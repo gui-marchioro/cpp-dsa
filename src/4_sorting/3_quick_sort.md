@@ -117,3 +117,65 @@
 ~~~
 - A last sort would be called in the `| 1 | 2 |` subarray
 - To finish the algorithm the stack call is traversed back and all the subarrays are placed in their correct positions
+
+## Sample Implementation
+
+The explanation above uses a **two-pointer partition strategy** (similar to *Hoare partition scheme*), where:
+
+* Two pointers (`l` and `r`) move toward each other
+* Elements are swapped when they are on the wrong side of the pivot
+* The pivot is placed after the pointers meet
+
+However, the implementation below uses a different approach called the **Lomuto partition scheme**.
+
+~~~ python
+def quicksort(arr):
+    def partition(low, high):
+        pivot = arr[high]
+        i = low - 1
+        for j in range(low, high):
+            if arr[j] <= pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+
+    def quicksort_recursive(low, high):
+        if low < high:
+            pi = partition(low, high)
+            quicksort_recursive(low, pi - 1)
+            quicksort_recursive(pi + 1, high)
+
+    quicksort_recursive(0, len(arr) - 1)
+    return arr
+
+
+test_array = [10, 7, 8, 9, 1, 5]
+print("Unsorted array:", test_array)
+sorted_array = quicksort(test_array)
+print("Sorted array:", sorted_array)
+~~~
+
+### Key differences:
+
+* Instead of two pointers, it uses:
+
+  * `j`: scans the array from left to right
+  * `i`: marks the boundary of elements smaller than or equal to the pivot
+* Elements are not swapped in pairs from both ends
+* The array is partitioned in a **single pass**
+* The pivot is always chosen as the **last element**
+* At the end, the pivot is swapped into its correct position (`i + 1`)
+
+### Intuition of this implementation:
+
+* Everything from `low` to `i` is ≤ pivot
+* Everything from `i+1` to `j` is > pivot
+* As `j` moves, the "≤ pivot" region grows
+
+### Why this matters
+
+Both approaches are correct and widely used, but:
+
+* **Lomuto** is simpler to understand and implement
+* **Hoare-style** is usually more efficient (fewer swaps)
