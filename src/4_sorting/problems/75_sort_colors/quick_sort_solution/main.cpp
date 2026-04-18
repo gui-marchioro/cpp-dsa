@@ -4,6 +4,7 @@
 using namespace std;
 /*  -- Quick sort solution
     -- Time complexity: O(n log n) best and average case, O(n^2) worst case
+        - recursive loops, divide and conquer
 
     -- Leet Code submission results:
         Runtime: 0 ms
