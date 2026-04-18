@@ -179,3 +179,103 @@ Both approaches are correct and widely used, but:
 
 * **Lomuto** is simpler to understand and implement
 * **Hoare-style** is usually more efficient (fewer swaps)
+
+### Visual explanation
+
+- Given an array
+~~~
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 | 0 |
+~~~
+- 1st step is to choose a pivot
+- Here the last element is choosen
+~~~
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+~~~
+- In  the 2nd step the array is traversed from left `i` to right `j`
+- If a lower number is in the right pointer, left and right elements are swaped
+- this continues until right pointer reaches the pivot
+~~~
+i j 
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+i     j
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+i         j
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+i             j
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+i                 j
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+i                     j
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+i                         j
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+i                             j
+| 7 | 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 0 |
+~~~  
+
+- When right pointer `j` reaches the pivot
+- Last step is to swap the pivot with left pointer position `i`
+
+~~~
+  i                               j   
+| 0 | 1 | 3 | 5 | 2 | 4 | 8 | 9 | 7 |
+~~~
+- That done the algorithm should be applied again in the left and right side of the array
+- In this case left part is already done
+~~~
+i j
+| 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 7 |
+  i   j
+| 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 7 |
+      i   j
+| 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 7 |
+          i   j
+| 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 7 |
+              i   j
+| 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 7 |
+                  i   j
+| 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 7 |
+                  i       j
+| 1 | 3 | 5 | 2 | 4 | 8 | 9 |  | 7 |
+~~~
+- Now time to find pivot position
+~~~
+                      i       j
+| 1 | 3 | 5 | 2 | 4 | 7 | 9 | 8 |
+~~~
+- Left side sub-array
+~~~
+i j
+| 1 | 3 | 5 | 2 |  | 4 |
+  i   j
+| 1 | 3 | 5 | 2 |  | 4 |
+      i   j
+| 1 | 3 | 5 | 2 |  | 4 |
+      i       j
+| 1 | 3 | 5 | 2 |  | 4 |
+          i          j
+| 1 | 3 | 2 | 5 |  | 4 |
+              i   j
+| 1 | 3 | 2 | 4 | 5 |
+~~~
+- Left side last sub-array
+~~~
+i j
+| 1 | 3 |  | 2 |
+  i   j
+| 1 | 3 |  | 2 |
+  i       j
+| 1 | 3 | 2 |
+      i   j
+| 1 | 2 | 3 |
+~~~
+- Left side done
+- Now right side subarray
+~~~
+i j
+| 9 |  | 8 |
+i        j
+| 9 |  | 8 |
+  i   j
+| 8 | 9 |
+~~~
