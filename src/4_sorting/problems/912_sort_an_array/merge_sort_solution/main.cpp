@@ -2,54 +2,81 @@
 
 using namespace std;
 
-/*  -- Quick sort solution
-    -- Time complexity: O(n log n) best and average, O(n^2) worst
-        - nested loops, divide and conquer
-    -- Space complexity: O(log n) best and average, O(n) worst
+/*  -- Merge sort solution
+    -- Time complexity: O(n log n)
+        - divide and conquer
+    -- Space complexity: O(n) worst
         - divide and conquer algorithm
 
     -- Leet Code submission results:
-        Time Limit Exceeded - Problem wanted n log (n)
+        Runtime: 352 ms
+        Beats: 49.87%
+
+        Memory: 183.68 MB
+        Beats: 40.95%
 */
 
 class Solution {
 public:
-    int FindPivotPosition(vector<int>& nums, int left, int right) {
-        // pick last element as the pivot (Lomuto strategy)
-        auto pivot = nums[right];
-        auto i = left - 1;
-        // traverse array or sub array ordering elements based in pivot size
-        for (int j = left; j < right; j++) {
-            if (nums[j] <= pivot) {
+    int FindMiddle(int left, int right) {
+        return left + (right - left) / 2;
+    }
+
+    void Merge(vector<int>& nums, int left, int middle, int right) {
+        // sub array copies
+        std::vector<int> leftNums(nums.begin() + left, nums.begin() + middle + 1);
+        std::vector<int> rightNums(nums.begin() + middle + 1, nums.begin() + right + 1);
+        // order array in place
+        size_t i = 0;
+        size_t j = 0;
+        size_t k = static_cast<size_t>(left);
+        // order array by comparing subarray elements while both exists
+        while (i < leftNums.size() && j < rightNums.size()) {
+            if (leftNums[i] <= rightNums[j]) {
+                nums[k] = leftNums[i];
                 i++;
-                auto aux = nums[i];
-                nums[i] = nums[j];
-                nums[j] = aux;
             }
+            else {
+                nums[k] = rightNums[j];
+                j++;
+            }
+            k++;
         }
-        // find pivot position
-        int pivotPos = i+1;
-        auto aux = nums[pivotPos];
-        nums[pivotPos] = nums[right];
-        nums[right] = aux;
-        return pivotPos;
+        // fill remaining array with left subarray
+        while (i < leftNums.size()) {
+            nums[k] = leftNums[i];
+            k++;
+            i++;
+        }
+        while (j < rightNums.size())
+        {
+            nums[k] = rightNums[j];
+            k++;
+            j++;
+        }
     }
 
-    void RecursiveQuickSort(vector<int>& nums, int left, int right) {
-        if (left < right) {
-            auto pivot = FindPivotPosition(nums, left, right);
-            RecursiveQuickSort(nums, left, pivot - 1);
-            RecursiveQuickSort(nums, pivot + 1, right);
+    void RecursiveMergeSort(vector<int>& nums, int left, int right) {
+        if (left >= right) {
+            // return when we finish dividing the array
+            return;
         }
+        
+        int middle = FindMiddle(left, right);
+        RecursiveMergeSort(nums, left, middle);
+        RecursiveMergeSort(nums, middle + 1, right);
+
+        // order array in place
+        Merge(nums, left, middle, right);
     }
 
-    void QuickSort(vector<int>& nums) {
-        int size = static_cast<int>(nums.size());
-        RecursiveQuickSort(nums, 0, size - 1);
+    void MergeSort(vector<int>& nums) {
+        int size = static_cast<int>(nums.size()) - 1;
+        RecursiveMergeSort(nums, 0, size);
     }
 
     vector<int> sortArray(vector<int>& nums) {
-        QuickSort(nums);
+        MergeSort(nums);
         return nums;
     }
 };
