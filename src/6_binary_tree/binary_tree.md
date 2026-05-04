@@ -141,42 +141,9 @@ class BinaryTree:
         if val < node.val:
             return self._search_recursive(node.left, val)
         return self._search_recursive(node.right, val)
-
-        def preorder_traversal(self):
-        result = []
-        self._preorder_traversal(self.root, result)
-        return result
-
-    def _preorder_traversal(self, node, result):
-        if node:
-            result.append(node.val)
-            self._preorder_traversal(node.left, result)
-            self._preorder_traversal(node.right, result)
-
-    def postorder_traversal(self):
-        result = []
-        self._postorder_traversal(self.root, result)
-        return result
-
-    def _postorder_traversal(self, node, result):
-        if node:
-            self._postorder_traversal(node.left, result)
-            self._postorder_traversal(node.right, result)
-            result.append(node.val)
-
-    def inorder_traversal(self):
-        result = []
-        self._inorder_traversal(self.root, result)
-        return result
-
-    def _inorder_traversal(self, node, result):
-        if node:
-            self._inorder_traversal(node.left, result)
-            result.append(node.val)
-            self._inorder_traversal(node.right, result)
 ~~~
 
-## Tree Traversal
+# Tree Traversal
 
 Tree traversal means visiting all nodes of the tree in a specific order.
 
@@ -320,3 +287,196 @@ This makes traversal naturally recursive:
 
 This is a classic recursive problem.
 
+## Traversal Sample Implementation
+
+~~~python
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+    
+    ...
+
+    def preorder_traversal(self):
+        result = []
+        self._preorder_traversal(self.root, result)
+        return result
+
+    def _preorder_traversal(self, node, result):
+        if node:
+            result.append(node.val)
+            self._preorder_traversal(node.left, result)
+            self._preorder_traversal(node.right, result)
+
+    def postorder_traversal(self):
+        result = []
+        self._postorder_traversal(self.root, result)
+        return result
+
+    def _postorder_traversal(self, node, result):
+        if node:
+            self._postorder_traversal(node.left, result)
+            self._postorder_traversal(node.right, result)
+            result.append(node.val)
+
+    def inorder_traversal(self):
+        result = []
+        self._inorder_traversal(self.root, result)
+        return result
+
+    def _inorder_traversal(self, node, result):
+        if node:
+            self._inorder_traversal(node.left, result)
+            result.append(node.val)
+            self._inorder_traversal(node.right, result)
+~~~
+
+# Depth-First Search (DFS)
+
+Depth-First Search (DFS) is a traversal and search technique where we explore one branch of the tree as deep as possible before backtracking.
+
+Instead of visiting nodes level by level, DFS follows a path down to a leaf first, then returns to explore other branches.
+
+The recursive implementation below performs a DFS search for a target value.
+
+---
+
+## How it works
+
+Starting from the root:
+
+1. Visit the current node
+2. Check if the current value matches the target
+3. Search recursively in the left subtree
+4. If not found, search recursively in the right subtree
+
+This follows a **Root → Left → Right** pattern, which is equivalent to **Pre-order DFS**.
+
+---
+
+## Example
+
+For this tree:
+
+```text id="4k8f2j"
+       10
+      /  \
+     5    15
+    / \     \
+   2   7     20
+```
+
+Searching for:
+
+```text id="s6m2n8"
+dfs(7)
+```
+
+Visited order:
+
+```text id="t9x4p1"
+10 → 5 → 2 → 7
+```
+
+The search stops as soon as the value is found.
+
+---
+
+## Time Complexity
+
+### Worst case
+
+* **O(n)**
+
+In the worst case, every node must be visited.
+
+### Best case
+
+* **O(1)**
+
+If the target is found at the root.
+
+---
+
+## Space Complexity
+
+Because the implementation is recursive:
+
+* Average: **O(log n)**
+* Worst case: **O(n)**
+
+This depends on the height of the tree.
+
+---
+
+## DFS vs Tree Traversal
+
+Traversal methods like:
+
+* pre-order
+* in-order
+* post-order
+
+are all forms of DFS because they go deep into one subtree before moving to another.
+
+The difference is:
+
+* traversal visits all nodes
+* DFS search may stop early when the target is found
+
+---
+
+## When DFS is useful
+
+DFS is commonly used for:
+
+* searching values in trees
+* path finding
+* solving recursive tree problems
+* checking connectivity in graphs
+* backtracking problems
+
+Examples:
+
+* maze solving
+* folder structure search
+* dependency resolution
+* graph traversal problems
+
+## DFS Sample Implementation
+
+~~~python
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+    
+    ...
+
+    def dfs(self, data):
+        return self._dfs_recursive(self.root, data)
+
+    def _dfs_recursive(self, node, data):
+        if node:
+            print(node.val)
+        if node is None:
+            return False
+        if node.val == data:
+            return True
+        if self._dfs_recursive(node.left, data):
+            return True
+        if self._dfs_recursive(node.right, data):
+            return True
+~~~
