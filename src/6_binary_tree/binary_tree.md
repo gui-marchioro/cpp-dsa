@@ -345,6 +345,23 @@ Instead of visiting nodes level by level, DFS follows a path down to a leaf firs
 
 The recursive implementation below performs a DFS search for a target value.
 
+~~~python
+    def dfs(self, data):
+        return self._dfs_recursive(self.root, data)
+
+    def _dfs_recursive(self, node, data):
+        if node:
+            print(node.val)
+        if node is None:
+            return False
+        if node.val == data:
+            return True
+        if self._dfs_recursive(node.left, data):
+            return True
+        if self._dfs_recursive(node.right, data):
+            return True
+~~~
+
 ---
 
 ## How it works
@@ -449,34 +466,146 @@ Examples:
 * dependency resolution
 * graph traversal problems
 
-## DFS Sample Implementation
+## Breadth-First Search (BFS)
+
+Breadth-First Search (BFS) is a traversal and search technique where nodes are explored level by level.
+
+Instead of going deep into one branch first like DFS, BFS visits all nodes at the current depth before moving to the next level.
+
+This is also called **Level-Order Traversal**.
+
+The implementation below uses a **queue** to keep track of which nodes should be visited next.
 
 ~~~python
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
-
-
-class BinaryTree:
-    def __init__(self):
-        self.root = None
-    
-    ...
-
-    def dfs(self, data):
-        return self._dfs_recursive(self.root, data)
-
-    def _dfs_recursive(self, node, data):
-        if node:
-            print(node.val)
-        if node is None:
+    def bfs(self, data):
+        if self.root is None:
             return False
-        if node.val == data:
-            return True
-        if self._dfs_recursive(node.left, data):
-            return True
-        if self._dfs_recursive(node.right, data):
-            return True
+        queue = deque()
+        queue.append(self.root)
+
+        while queue:
+            node = queue.popleft()
+            print(node.val)
+            if node.val == data:
+                return True
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return False
 ~~~
+
+---
+
+## How it works
+
+Starting from the root:
+
+1. Add the root node to the queue
+2. Remove the first node from the queue
+3. Check if it matches the target value
+4. Add its left child to the queue
+5. Add its right child to the queue
+6. Repeat until the queue is empty or the value is found
+
+Because a queue follows **First In, First Out (FIFO)** order, nodes are processed level by level.
+
+---
+
+## Example
+
+For this tree:
+
+```text id="w4m7k2"
+       10
+      /  \
+     5    15
+    / \     \
+   2   7     20
+```
+
+Searching for:
+
+```text id="n8p3c1"
+bfs(7)
+```
+
+Visited order:
+
+```text id="r5x2v9"
+10 → 5 → 15 → 2 → 7
+```
+
+The search stops as soon as the value is found.
+
+---
+
+## Time Complexity
+
+### Worst case
+
+* **O(n)**
+
+In the worst case, every node must be visited.
+
+### Best case
+
+* **O(1)**
+
+If the target is found at the root.
+
+---
+
+## Space Complexity
+
+BFS stores nodes in a queue:
+
+* Average: **O(w)**
+
+where **w** is the maximum width of the tree.
+
+### Worst case
+
+* **O(n)**
+
+This happens when the last level contains many nodes.
+
+This is often larger than DFS, which usually depends on tree height instead of width.
+
+---
+
+## BFS vs DFS
+
+### BFS
+
+* explores level by level
+* uses a queue
+* better for finding the shortest path in unweighted graphs
+* useful when the target is likely close to the root
+
+### DFS
+
+* explores one branch deeply first
+* usually uses recursion or a stack
+* useful for recursive structure problems
+* often uses less memory in wide trees
+
+---
+
+## When BFS is useful
+
+BFS is commonly used for:
+
+* shortest path problems (unweighted graphs)
+* level-order traversal
+* finding the closest matching node
+* network broadcasting problems
+* minimum-step problems
+
+Examples:
+
+* social network connections
+* shortest moves in a puzzle
+* nearest file or folder search
+* tree level analysis
+
