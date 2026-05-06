@@ -153,7 +153,7 @@ In binary trees, the most common traversal strategies are:
 * **In-order**
 * **Post-order**
 
-These are depth-first traversal methods implemented recursively.
+These are depth-first traversal (DFS) methods implemented recursively.
 
 ---
 
@@ -466,7 +466,7 @@ Examples:
 * dependency resolution
 * graph traversal problems
 
-## Breadth-First Search (BFS)
+# Breadth-First Search (BFS)
 
 Breadth-First Search (BFS) is a traversal and search technique where nodes are explored level by level.
 
