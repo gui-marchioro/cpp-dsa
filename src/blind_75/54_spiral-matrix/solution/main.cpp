@@ -35,47 +35,44 @@ class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
         vector<int> result;
-        int topL = 0;
-        int leftC = 0;
-        int bottomL = matrix.size()-1;
-        int rightC = matrix[0].size()-1;
-        while (topL <= bottomL || leftC <= rightC) {
+        int top = 0;
+        int left = 0;
+        int bottom = matrix.size()-1;
+        int right = matrix[0].size()-1;
+        while (top <= bottom || left <= right) {
             // go to the top right
-            for (int c = leftC; c <= rightC; c++) {
-                auto element = pair<int, int>{topL, c};
-                if (topL > bottomL || leftC > rightC) {
-                    return result;
-                }
-                result.push_back(matrix[topL][c]);
+            for (int c = left; c <= right; c++) {
+                auto element = pair<int, int>{top, c};
+                result.push_back(matrix[top][c]);
             }
-            topL++;
+            top++;
+            if (top > bottom || left > right) {
+                break;
+            }
             // go to the bottom right
-            for (int l = topL; l <= bottomL; l++) {
-                auto element = pair<int, int>{l, rightC};
-                if (topL > bottomL || leftC > rightC) {
-                    return result;
-                }
-                result.push_back(matrix[l][rightC]);
+            for (int l = top; l <= bottom; l++) {
+                auto element = pair<int, int>{l, right};
+                result.push_back(matrix[l][right]);
             }
-            rightC--;
+            right--;
+            if (top > bottom || left > right) {
+                break;
+            }
             // go to the bottom left
-            for (int c = rightC; c >= leftC; c--) {
-                auto element = pair<int, int>{bottomL, c};
-                if (topL > bottomL || leftC > rightC) {
-                    return result;
-                }
-                result.push_back(matrix[bottomL][c]);
+            for (int c = right; c >= left; c--) {
+                auto element = pair<int, int>{bottom, c};
+                result.push_back(matrix[bottom][c]);
             }
-            bottomL--;
+            bottom--;
+            if (top > bottom || left > right) {
+                break;
+            }
             // go to the top left
-            for (int l = bottomL; l >= topL; l--) {
-                auto element = pair<int, int>{l, leftC};
-                if (topL > bottomL || leftC > rightC) {
-                    return result;
-                }
-                result.push_back(matrix[l][leftC]);
+            for (int l = bottom; l >= top; l--) {
+                auto element = pair<int, int>{l, left};
+                result.push_back(matrix[l][left]);
             }
-            leftC++;
+            left++;
             //cout << "topL: " << topL << ", bottomL: " << bottomL << ", leftC: " << leftC << ", rightC: " << rightC << endl;
         }
         return result;
