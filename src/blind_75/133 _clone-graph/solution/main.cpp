@@ -11,9 +11,9 @@ using namespace std;
             - or creating new clone if not
         - avoid to repeat looking for nodes already in the hashmap
     -- Time complexity: O(n)
-        - all TreeNodes are visited at least once
-    -- Space complexity: average O(log n), worst O(n)
-        - In a completely unbalanced tree all nodes would be kept in memory
+        - all nodes are visited at least once
+    -- Space complexity: O(n)
+        - all nodes are saved in memory
 
     -- Leet Code submission results:
         Runtime: 3 ms
