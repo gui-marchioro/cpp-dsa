@@ -1,5 +1,5 @@
 """
--- Brute force solution
+-- Binary search solution
     -- Time complexity: O(log(n))
         - start evaluating x // 2 as the sqrt(x)
         - cut in half candidate numbers as the algorithm progresses
