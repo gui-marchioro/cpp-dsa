@@ -1,6 +1,6 @@
-# C++ Data Structures and Algorithms
+# Data Structures and Algorithms Studies
 
-This repository contains summaries about common Data Structures and Algorithms, along with implementations of solved problems in C++.
+This repository contains summaries about common Data Structures and Algorithms, along with implementations of solved problems in C++ and Python.
 
 ## Useful scripts
 
